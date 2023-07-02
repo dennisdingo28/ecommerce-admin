@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 interface HeadingProps {
-    title: string;
-    description : string;
+  title: string;
+  description : string;
 }
 
 const Heading: FC<HeadingProps> = ({title,description}) => {
