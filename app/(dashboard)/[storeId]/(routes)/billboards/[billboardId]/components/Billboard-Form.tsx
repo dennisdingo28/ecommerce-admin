@@ -1,5 +1,5 @@
 "use client"
-import { Billboard, Store } from "@prisma/client";
+import { Billboard} from "@prisma/client";
 import { FC, useState } from "react";
 import Heading from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
@@ -15,8 +15,6 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { AlertModal } from "@/components/ui/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/image-upload";
 
 interface BillboardFormProps {
@@ -34,7 +32,6 @@ type BillboardFormValues = z.infer<typeof formSchema>;
 export const BillboardForm: FC<BillboardFormProps> = ({initialData}) => {
     const params = useParams();
     const router = useRouter();
-    const origin = useOrigin();
 
     const [open,setOpen] = useState(false);
     const [loading,setLoading] = useState(false);   
@@ -60,8 +57,8 @@ export const BillboardForm: FC<BillboardFormProps> = ({initialData}) => {
                 await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`,data);
             else
                 await axios.post(`/api/${params.storeId}/billboards`,data);
-
             router.refresh();
+            router.push(`/${params.storeId}/billboards`)
             toast.success(toastMessage);
         }catch(error){
             toast.error("Something went wrong");
@@ -74,7 +71,7 @@ export const BillboardForm: FC<BillboardFormProps> = ({initialData}) => {
             setLoading(true);
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
             router.refresh();
-            router.push("/")
+            router.push(`/${params.storeId}/billboards`)
             toast.success('Billboard deleted.');
         } catch (error) {
             toast.error('Make sure you removed all categories using this billboard first.');

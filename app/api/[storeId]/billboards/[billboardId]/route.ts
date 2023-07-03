@@ -81,6 +81,8 @@ export async function DELETE(req:Request,{params}:{params:{billboardId: string, 
         if(!params.billboardId){
             return new NextResponse("Billboard id is required",{status:400});
         }
+        console.log('got here');
+        
         const storeByUserId = await prismadb.store.findFirst({
             where:{
                 id: params.storeId,
@@ -96,6 +98,7 @@ export async function DELETE(req:Request,{params}:{params:{billboardId: string, 
                 id:params.billboardId,
             }
         });
+        console.log('got here2');
 
         return NextResponse.json(billboard);
 
