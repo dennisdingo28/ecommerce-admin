@@ -9,7 +9,7 @@ export async function GET(req:Request,{params}:{params:{billboardId: string}}){
             return new NextResponse("Billboard id is required",{status:400});
         }
     
-        const billboard = await prismadb.store.findUnique({
+        const billboard = await prismadb.billboard.findUnique({
             where:{
                 id:params.billboardId,
             }
@@ -93,7 +93,7 @@ export async function DELETE(req:Request,{params}:{params:{billboardId: string, 
         if(!storeByUserId){
             return new NextResponse("Unauthorized",{status:403});
         }
-        const billboard = await prismadb.store.deleteMany({
+        const billboard = await prismadb.billboard.deleteMany({
             where:{
                 id:params.billboardId,
             }
